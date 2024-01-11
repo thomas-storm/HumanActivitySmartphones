@@ -60,3 +60,6 @@ y_train <- read_table("./data/train/y_train.txt",
                      col_types = cols(activity = col_double())
                         )
 
+X_Test <- X_test %>% select(matches("mean") | matches("std"))
+
+X_Train <- X_train %>% select(matches("mean") | matches("std"))
