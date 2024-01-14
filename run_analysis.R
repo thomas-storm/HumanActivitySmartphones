@@ -63,3 +63,10 @@ y_train <- read_table("./data/train/y_train.txt",
 X_Test <- X_test %>% select(matches("mean") | matches("std"))
 
 X_Train <- X_train %>% select(matches("mean") | matches("std"))
+
+x_test <- x_test %>% mutate(activity = recode(y_test$activity, !!!activity_labels$activity))
+
+y_test <- y_test %>% mutate(activity = recode(y_test$activity, !!!activity_labels$activity))
+
+                
+        
