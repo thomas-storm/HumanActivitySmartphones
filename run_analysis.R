@@ -59,14 +59,22 @@ y_train <- read_table("./data/train/y_train.txt",
                      col_names = "activity", 
                      col_types = cols(activity = col_double())
                         )
+Experiment <- tibble(experiment = as.factor(c(rep("test", nrow(y_test)), rep("train", nrow(y_train)))))
 
-X_Test <- X_test %>% select(matches("mean") | matches("std"))
+Subject <- bind_rows(subject_test, subject_train)
+        
+Activities <- bind_rows(y_train, y_test)
 
-X_Train <- X_train %>% select(matches("mean") | matches("std"))
+Data <- bind_rows(X_test, X_train)
 
-x_test <- x_test %>% mutate(activity = recode(y_test$activity, !!!activity_labels$activity))
+Untidy <- bind_cols(Experiment, Subject, Activities, Data)
 
-y_test <- y_test %>% mutate(activity = recode(y_test$activity, !!!activity_labels$activity))
+Untidy <- Untidy %>%  select(matches("experiment") | matches("subject") | matches("activity") | matches("mean") | matches("std")) %>% 
+        select(-matches("-meanFreq()"), -matches("^angle\\(")) %>%
+        mutate(activity = recode(Untidy$activity, !!!activity_labels$activity)) %>% 
+        rename_with(gsub, pattern = "mean\\(\\)", replace = "MEAN") %>%
+        rename_with(gsub, pattern = "std\\(\\)", replace = "STDEV") %>%
+        rename_with(gsub, pattern = "^f", replace = "FREQ-") %>%
+        rename_with(gsub, pattern = "^t", replace = "TIME-")
 
-                
         
