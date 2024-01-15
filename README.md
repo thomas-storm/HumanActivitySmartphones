@@ -24,4 +24,5 @@ Objective is to create one R script called run_analysis.R that does the followin
 5. Summarize mean for by subject and by activity
 6. Save step 4. to .csv file Tidy.csv
 7. Save step 5. to .csv file Tidy_Mean.csv
+8. Save step 5. to .txt file Tidy_Mean.txt
 See also the comments in run_analyis.R
