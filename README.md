@@ -16,3 +16,12 @@ Objective is to create one R script called run_analysis.R that does the followin
 - CodeBook
 - run_analysis.R
 - Files Tidy.csv and Tidy_Mean.csv
+# Workflow in run_analysis.R
+1. Download and extract zip-file to data folder
+2. Read files listed under Description of the data into R
+3. Rbind and Cbind the data into one untidy tibble "Untidy"
+4. Convert into tidy tibble
+5. Summarize mean for by subject and by activity
+6. Save step 4. to .csv file Tidy.csv
+7. Save step 5. to .csv file Tidy_Mean.csv
+See also the comments in run_analyis.R
