@@ -23,7 +23,7 @@ The variables 4 - 69 were selected as mean and standard deviations, and the desc
 Results are either TIME or FREQuency domain, and described as MEAN or STDEV. Further details can be found in the file features_info.txt
 
 # Listing on the variables.
-Note: The variable "experiment" is not included in the Tidy_Mean.csv dataset
+Note: The variable "experiment" is not included in the Tidy_Mean.csv / Tidy_Mean.txt dataset
 1. experiment
 2. subject
 3. activity
