@@ -18,6 +18,8 @@ if (!file.exists(sub_dir)){
         file.rename("UCI HAR Dataset", "data")
 } else {print("data folder available")}
 
+# read features, activity_labels,subject_test/train, X_test/train, y_test/train 
+
 features <- read_table("./data/features.txt", 
                      col_names = c("index","features"), 
                      col_types = cols(
@@ -59,7 +61,11 @@ y_train <- read_table("./data/train/y_train.txt",
                      col_names = "activity", 
                      col_types = cols(activity = col_double())
                         )
+# create Experiment factor (test/train) - a bit redundant as subjects are either test or train but good practice
+
 Experiment <- tibble(experiment = as.factor(c(rep("test", nrow(y_test)), rep("train", nrow(y_train)))))
+
+# bind data together to create on "Untidy" tibble
 
 Subject <- bind_rows(subject_test, subject_train)
         
@@ -69,12 +75,32 @@ Data <- bind_rows(X_test, X_train)
 
 Untidy <- bind_cols(Experiment, Subject, Activities, Data)
 
-Untidy <- Untidy %>%  select(matches("experiment") | matches("subject") | matches("activity") | matches("mean") | matches("std")) %>% 
+# "Tidy" table only including means and standard deviations, and descriptive variable names
+
+Tidy <- Untidy %>%  select(matches("experiment") | matches("subject") | matches("activity") | matches("mean") | matches("std")) %>% 
         select(-matches("-meanFreq()"), -matches("^angle\\(")) %>%
         mutate(activity = recode(Untidy$activity, !!!activity_labels$activity)) %>% 
         rename_with(gsub, pattern = "mean\\(\\)", replace = "MEAN") %>%
         rename_with(gsub, pattern = "std\\(\\)", replace = "STDEV") %>%
         rename_with(gsub, pattern = "^f", replace = "FREQ-") %>%
         rename_with(gsub, pattern = "^t", replace = "TIME-")
+
+# summarize Tidy tibble with mean
+
+Tidy_Mean <- Tidy %>% group_by(subject, activity) %>% summarize_at(c(3:63), mean, na.rm = TRUE)
+
+# write to two files
+
+write.csv(Tidy, file = "./Tidy.csv")
+
+write.csv(Tidy_Mean, file = "./Tidy_Mean.csv")
+
+# clean up environment
+
+rm(list=ls())
+
+
+
+
 
         
