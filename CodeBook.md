@@ -16,15 +16,6 @@ The zip-file contains the following files
 - train/subject_train.txt with the subject IDs for the train data 7352 entries
 - train/X_train.txt with the train data 7352 x 561 entries
 - train/y_train.txt codes the activities in train data 7352 entries   
-# Workflow in run_analysis.R
-1. Download and extract zip-file to data folder
-2. Read files listed under Description of the data into R
-3. Rbind and Cbind the data into one untidy tibble "Untidy"
-4. Convert into tidy tibble
-5. Summarize mean for by subject and by activity
-6. Save step 4. to .csv file Tidy.csv
-7. Save step 5. to .csv file Tidy_Mean.csv
-See also the comments in run_analyis.R
 # Variables
 The variable experiment was created to allow subsetting for test and train
 The variable subject and activity were created from the files included on the zip file
