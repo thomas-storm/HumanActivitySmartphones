@@ -87,13 +87,15 @@ Tidy <- Untidy %>%  select(matches("experiment") | matches("subject") | matches(
 
 # summarize Tidy tibble with mean
 
-Tidy_Mean <- Tidy %>% group_by(subject, activity) %>% summarize_at(c(3:66), mean, na.rm = TRUE)
+Tidy_Mean <- Tidy %>% group_by(subject, activity) %>% summarize_at(c(4:67), mean, na.rm = TRUE)
 
-write to two files
+#write to two files
 
 write.csv(Tidy, file = "./Tidy.csv")
 
 write.csv(Tidy_Mean, file = "./Tidy_Mean.csv")
+ 
+write.table(Tidy_Mean, file = "./Tidy_Mean.txt", row.names = FALSE)
 
 clean up environment
 
